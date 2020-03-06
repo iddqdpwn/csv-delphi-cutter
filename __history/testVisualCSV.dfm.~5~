@@ -1,0 +1,94 @@
+﻿object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'CSV'
+  ClientHeight = 657
+  ClientWidth = 1044
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 694
+    Top = 257
+    Width = 91
+    Height = 13
+    Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100' '#1089#1090#1088#1086#1082':'
+  end
+  object Label3: TLabel
+    Left = 694
+    Top = 308
+    Width = 154
+    Height = 18
+    Caption = #1054#1090#1089#1086#1088#1090#1080#1088#1086#1074#1072#1090#1100' '#1087#1086' '#1089#1090#1086#1083#1073#1094#1091' '#8470
+  end
+  object Button1: TButton
+    Left = 694
+    Top = 32
+    Width = 114
+    Height = 25
+    Caption = #1054#1090#1082#1088#1099#1090#1100' *.csv '#1092#1072#1081#1083
+    TabOrder = 0
+    OnClick = Button1Click
+  end
+  object ListBox1: TListBox
+    Left = 7
+    Top = 32
+    Width = 178
+    Height = 330
+    ItemHeight = 13
+    TabOrder = 1
+  end
+  object StringGrid1: TStringGrid
+    Left = 264
+    Top = 32
+    Width = 424
+    Height = 330
+    ColCount = 4
+    DefaultColWidth = 104
+    FixedCols = 0
+    RowCount = 1
+    FixedRows = 0
+    TabOrder = 2
+  end
+  object StaticText1: TStaticText
+    Left = 7
+    Top = 399
+    Width = 4
+    Height = 4
+    TabOrder = 3
+  end
+  object Сохранить: TButton
+    Left = 694
+    Top = 338
+    Width = 114
+    Height = 25
+    Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100
+    TabOrder = 4
+  end
+  object Edit1: TEdit
+    Left = 694
+    Top = 276
+    Width = 91
+    Height = 21
+    TabOrder = 5
+    Text = 'Edit1'
+  end
+  object ComboBox1: TComboBox
+    Left = 854
+    Top = 305
+    Width = 51
+    Height = 21
+    TabOrder = 6
+    Items.Strings = (
+      '1'
+      '2'
+      '3'
+      '4')
+  end
+end

@@ -1,0 +1,52 @@
+unit testVisualCSV;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    StaticText1: TStaticText;
+    Button1: TButton;
+    ListBox1: TListBox;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  selectedFile: string;
+  dlg: TOpenDialog;
+
+begin
+  selectedFile := '';
+  dlg := TOpenDialog.Create(self);
+  try
+    dlg.InitialDir := 'C:\';
+    dlg.Filter := 'csv files|*.csv';
+    if dlg.Execute(Handle) then
+      selectedFile := dlg.FileName;
+  finally
+    dlg.Free;
+  end;
+  if selectedFile <> '' then
+  begin
+    Form1.Caption := Form1.Caption + ': ' + selectedFile;
+  end;
+end;
+
+
+
+end.

@@ -1,0 +1,123 @@
+unit testVisualCSV;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Grids;
+
+type
+  TForm1 = class(TForm)
+    Button1: TButton;
+    ListBox1: TListBox;
+    StringGrid1: TStringGrid;
+    StaticText1: TStaticText;
+    Сохранить: TButton;
+    Label1: TLabel;
+    Label3: TLabel;
+    Edit1: TEdit;
+    ComboBox1: TComboBox;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  selectedFile: string;
+  dlg: TOpenDialog;
+  csvFile: TextFile;
+  buf: string;
+  //удалить
+   i, j, Position, count, edt1: integer;
+   temp, tempField : string;
+   FieldDel: char;
+   Data: TStringList;
+
+begin
+  selectedFile := '';
+  dlg := TOpenDialog.Create(self);
+  try
+    dlg.InitialDir := 'C:\';
+    dlg.Filter := 'csv files|*.csv';
+    if dlg.Execute(Handle) then
+      selectedFile := dlg.FileName;
+  finally
+    dlg.Free;
+  end;
+  if selectedFile <> '' then
+  begin
+    Form1.Caption := Form1.Caption + ': ' + selectedFile;
+  end;
+
+  AssignFile(csvFile, selectedFile);
+  reset(csvFile);
+  while not EOF(csvFile) do
+  begin
+    ReadLn(csvFile, buf);
+    ListBox1.Items.Add(buf);
+
+  end;
+
+  CloseFile(csvFile);
+
+              //String Grid fill
+  Data := TStringList.Create;
+  FieldDel := ',';
+  Data.LoadFromFile(selectedFile);
+  temp :=  Data[1];
+  count := 0;
+  for i:= 1 to length(temp) do
+    if copy(temp,i,1) =  FieldDel then
+      inc(count);
+  edt1 := count+1;
+  StringGrid1.ColCount := 4;
+  StringGrid1.Cells[0,0] := 'Наименование товара';
+  StringGrid1.Cells[1,0] := 'Цена';
+  StringGrid1.Cells[2,0] := 'Кол-во';
+  StringGrid1.Cells[3,0] := 'Сумма';
+  StringGrid1.RowCount := Data.Count +1;
+  StringGrid1.FixedCols := 0;
+  for i := 0 to Data.Count - 1 do
+    begin;
+      temp :=  Data[i];
+      if copy(temp,length(temp),1) <> FieldDel then
+        temp := temp + FieldDel;
+//      while Pos('"', temp) > 0 do
+//        begin
+//          Delete(temp,Pos('"', temp),1);
+//        end;
+      for j := 1 to edt1 do
+      begin
+        Position := Pos(FieldDel,temp);
+        tempField := copy(temp,0,Position-1);
+        StringGrid1.Cells[j-1,i+1] := tempField;
+        Delete(temp,1,length(tempField)+1);
+      end;
+    end;
+    Data.Free;
+
+    //заполняем сумму
+    for i := 1 to StringGrid1.RowCount - 1 do
+      begin
+        StringGrid1.Cells[3,i] := (StringGrid1.Cells[1,i].ToInteger * StringGrid1.Cells[2,i].ToInteger).ToString;
+      end;
+
+
+    //Узнаём количество строк
+    StaticText1.Caption := 'Количество строк: ' + (StringGrid1.RowCount -1).ToString ;
+
+    ComboBox1.Items[0] := '1';
+    ComboBox1.Items[1] := '2';
+end;
+
+end.
